@@ -11,7 +11,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("View 컨트롤러 - 게시글")
-@WebMvcTest
+@WebMvcTest(ArticleController.class) // ArticleController에 대해서만 수행
+//@WebMvcTest // 그냥 쓰면 모든 Controller에 대해서 수행
 class ArticleControllerTest {
 
     private final MockMvc mvc;
