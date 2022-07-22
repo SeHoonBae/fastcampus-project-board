@@ -44,7 +44,7 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-// Querydsl 설정부
+// Querydsl 설정부, default는 build 디렉토리에 생성되나 IntelliJ IDLE을 사용시 gradle에서 한번 읽고 IntelliJ에서 중복 읽음으로써 버그 발생하는 현상을 없애기 위해
 def generated = 'src/main/generated'
 
 // querydsl QClass 파일 생성 위치를 지정
