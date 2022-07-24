@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<thlogic>
+<!-- 현재는 header 태그를 이용, id를 이용하고 싶다면 sel="#id" 이용 -->
+<!-- index.html 의 header 태그를 찾아라 -> root경로의 header.html 파일을 찾아라 -> 해당 header 태그를 삽입해라 -->
+    <attr sel="#header" th:replace="header :: header" />
+    <attr sel="#footer" th:replace="footer :: footer" />
+</thlogic>
