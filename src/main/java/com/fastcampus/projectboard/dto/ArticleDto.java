@@ -5,7 +5,7 @@ import com.fastcampus.projectboard.domain.Article;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public record ArticleDto(
+public record ArticleDto( // recod는 기본 적으로 getter, setter가 만들어진다.
         Long id,
         UserAccountDto userAccountDto,
         String title,
