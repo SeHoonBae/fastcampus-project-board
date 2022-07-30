@@ -4,4 +4,22 @@
 <!-- index.html 의 header 태그를 찾아라 -> root경로의 header.html 파일을 찾아라 -> 해당 header 태그를 삽입해라 -->
     <attr sel="#header" th:replace="header :: header" />
     <attr sel="#footer" th:replace="footer :: footer" />
+
+    <attr sel="#article-main" th:object="${article}">
+        <attr sel="#article-header/h1" th:text="*{title}" /> <!-- 상위 element에서 th:object="${article}이 없다면 해당 부분에 ${article.title}로 사용해야함 -->
+        <attr sel="#nickname" th:text="*{nickname}" />
+        <attr sel="#email" th:text="*{email}" />
+        <attr sel="#created-at" th:datetime="*{createdAt}" th:text="*{#temporals.format(createdAt, 'yyyy-MM-dd HH:mm:ss')}" />
+        <attr sel="#hashtag" th:text="*{hashtag}" />
+        <attr sel="#article-content" th:text="*{content}" />
+    </attr>
+
+    <attr sel="#article-comments" th:remove="all-but-first">
+        <attr sel="li[0]" th:each="articleComment : ${articleComments}">
+            <attr sel="div/strong" th:text="${articleComment.nickname}" />
+            <attr sel="div/small/time" th:datetime="${articleComment.createdAt}" />
+            <attr sel="div/p" th:text="${articleComment.content}" />
+        </attr>
+    </attr>
+
 </thlogic>
