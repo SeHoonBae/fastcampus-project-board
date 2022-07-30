@@ -21,6 +21,7 @@ public interface ArticleCommentRepository extends
 {
 
     List<ArticleComment> findByArticle_Id(Long articleId); // ArticleComment와 Article의 연관관계를 이용하여 Article_id를 이용해서 ArticleComment를 찾는다는 것
+    void deleteByIdAndUserAccount_UserId(Long articleCommentId, String userId);
 
     @Override
     default void customize(QuerydslBindings bindings, QArticleComment root){
@@ -30,5 +31,4 @@ public interface ArticleCommentRepository extends
         bindings.bind(root.createdBy).first(StringExpression::containsIgnoreCase);
 
     }
-
 }
