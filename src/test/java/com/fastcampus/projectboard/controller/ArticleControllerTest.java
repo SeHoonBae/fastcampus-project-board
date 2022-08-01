@@ -5,6 +5,7 @@ import com.fastcampus.projectboard.dto.ArticleWithCommentsDto;
 import com.fastcampus.projectboard.dto.UserAccountDto;
 import com.fastcampus.projectboard.service.ArticleService;
 import com.fastcampus.projectboard.service.PaginationService;
+import com.fastcampus.projectboard.type.SearchType;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -69,6 +70,36 @@ class ArticleControllerTest {
                 .andExpect(model().attributeExists("articles"));
 
         then(articleService).should().searchArticles(eq(null), eq(null), any(Pageable.class));
+        then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
+    }
+
+    @DisplayName("[view] [GET] 게시글 리스트 {게시판} 페이지 - 검색어와 함께 호출")
+    @Test
+    public void givenSearchKKeyword_whenSearchingArticlesView_thenReturnsArticlesView() throws Exception {
+
+        // Given
+        SearchType searchType = SearchType.TITLE;
+        String searchValue = "title";
+
+
+        given(articleService.searchArticles(eq(searchType), eq(searchValue), any(Pageable.class)))
+                .willReturn(Page.empty());
+
+        given(paginationService.getPaginationBarNumbers(anyInt(), anyInt()))
+                .willReturn(List.of(1,2,3,4,5));
+
+        // When && Then
+        mvc.perform(get("/articles")
+                        .queryParam("searchType", searchType.name())
+                        .queryParam("searchValue", searchValue)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andExpect(view().name("articles/index"))
+                .andExpect(model().attributeExists("articles"))
+                .andExpect(model().attributeExists("searchTypes"));
+
+        then(articleService).should().searchArticles(eq(searchType), eq(searchValue), any(Pageable.class));
         then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
     }
 
